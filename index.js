@@ -45,17 +45,14 @@ io.sockets.on('connection',function(socket){
 //===================IDPHIM và TÊN PHIM
 	socket.on('client-send-data',function(data){
 		socket.on('client-send-data-title',function(data2){
-			socket.on('client-send-genreid',function(data3){
-					console.log("Sever nhan: "+data+" "+data2+" "+data3);
+				console.log("Sever nhan: "+data+" "+data2);
 					var sql="INSERT INTO phim(`IDphim`,`TenPhim`) SELECT * FROM(SELECT ?,?) as tmp WHERE NOT EXISTS(SELECT `IDphim`,`TenPhim` FROM phim WHERE IDphim = '?')LIMIT 1;";
-					var values= [data,data2,data3];
+					var values= [data,data2];
 					sql=connection.format(sql,values);
 					connection.query(sql,function(err,rows,fields){
-					if(err) console.log("Sever da add: "+data+" "+data2+" "+data3);
+					if(err) console.log("Sever da add: "+data+" "+data2);
 			//console.log('the solution is: ',rows);
 				});
-
-			});
 
 		});
 			
@@ -75,7 +72,7 @@ io.sockets.on('connection',function(socket){
 	socket.on('client-send-data',function(data){
 		socket.on('client-send-genreid',function(data3){
 			var sql="INSERT INTO theloaiphim(ID,IDTheLoai,IDphim) VALUES(null,?,?);";
-			var values=[data,data3];
+			var values=[data3,data];
 			sql=connection.format(sql,values);
 			connection.query(sql,function(err,rows,fields){
 				if (err) console.log("sever da add: "+data+"va"+data3);
